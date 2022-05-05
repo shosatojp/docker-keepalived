@@ -1,0 +1,29 @@
+version: '3'
+services:
+  r1:
+    build: .
+    networks:
+      macvlan:
+        ipv4_address: 192.168.0.100
+    volumes:
+      - ./r1.conf:/etc/keepalived/keepalived.conf:ro
+    privileged: true
+
+  r2:
+    build: .
+    networks:
+      macvlan:
+        ipv4_address: 192.168.0.101
+    volumes:
+      - ./r2.conf:/etc/keepalived/keepalived.conf:ro
+    privileged: true
+
+networks:
+  macvlan:
+    driver: macvlan
+    driver_opts:
+      parent: eno1
+    ipam:
+      config:
+        - subnet: 192.168.0.0/24
+          gateway: 192.168.0.1
