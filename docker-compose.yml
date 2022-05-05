@@ -7,7 +7,8 @@ services:
         ipv4_address: 192.168.0.100
     volumes:
       - ./r1.conf:/etc/keepalived/keepalived.conf:ro
-    privileged: true
+    cap_add:
+      - "NET_ADMIN"
 
   r2:
     build: .
@@ -16,7 +17,8 @@ services:
         ipv4_address: 192.168.0.101
     volumes:
       - ./r2.conf:/etc/keepalived/keepalived.conf:ro
-    privileged: true
+    cap_add:
+      - "NET_ADMIN"
 
 networks:
   macvlan:
